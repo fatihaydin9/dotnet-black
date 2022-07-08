@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.Results" Version="16.32.0" />
+    <PackageReference Include="DotNetCore.Security" Version="16.32.0" />
+    <PackageReference Include="DotNetCore.Validation" Version="16.32.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Black.Database\Black.Database.csproj" />
+    <ProjectReference Include="..\Black.Infrastructure\Black.Infrastructure.csproj" />
+    <ProjectReference Include="..\Black.Model\Black.Model.csproj" />
+    <ProjectReference Include="..\Black.Object\Black.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,63 @@
+version: '3.4'
+
+services:
+
+  userdb:
+    container_name: userdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2149357
+      - POSTGRES_DB=userdb
+    restart: always
+    ports:
+        - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=2149357
+      - DatabaseSettings:ConnectionString=ConnectionString=Server=host.docker.internal;Port=5432;Database=userdb;User Id=postgres;Password=2149357;"
+    restart: always
+    ports:
+        - "5020:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin       
+      
+  black.gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  black.authapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5001:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      
+  black.fileapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5002:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  black.userapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseSettings:ConnectionString=Server=host.docker.internal;Port=5432;Database=userdb;User Id=postgres;Password=2149357
+    depends_on:
+      - userdb
+    ports:
+      - "5003:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+

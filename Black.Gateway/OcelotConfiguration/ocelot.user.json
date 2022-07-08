@@ -1,0 +1,17 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/user-gate/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "ServiceName": "user",
+      "SwaggerKey": "user",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "black.userapi",
+          "Port": "5003"
+        }
+      ]
+    }
+  ]
+}

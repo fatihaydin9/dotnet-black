@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4  
+
+  userdb:
+     image: postgres
+
+  black.authapi:
+    image: ${DOCKER_REGISTRY-}blackauthapi
+    build:
+      context: .
+      dockerfile: Black.AuthAPI/Dockerfile
+
+  black.fileapi:
+    image: ${DOCKER_REGISTRY-}blackfileapi
+    build:
+      context: .
+      dockerfile: Black.FileAPI/Dockerfile
+
+  black.userapi:
+    image: ${DOCKER_REGISTRY-}blackuserapi
+    build:
+      context: .
+      dockerfile: Black.UserAPI/Dockerfile
+
+  black.gateway:
+    image: ${DOCKER_REGISTRY-}blackgateway
+    build:
+      context: .
+      dockerfile: Black.Gateway/Dockerfile
+
+volumes:
+  postgres_data:
+  pgadmin_data:

@@ -1,0 +1,43 @@
+﻿using Black.Model.User;
+using Black.Service.UserService;
+using DotNetCore.AspNetCore;
+using DotNetCore.Objects;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Black.UserAPI.Controllers;
+
+[ApiController]
+ [Route("api/[controller]")]
+public sealed class UsersController : ControllerBase
+{
+    private readonly IUserService _userService;
+
+    public UsersController(IUserService userService) => _userService = userService;
+
+    [HttpPost]
+    public IActionResult Add(UserModel model) => _userService.AddAsync(model).ApiResult();
+
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(long id) => _userService.DeleteAsync(id).ApiResult();
+
+
+    [HttpGet("{id}")]
+    public IActionResult Get(long id) => _userService.GetAsync(id).ApiResult();
+
+
+    [HttpGet("grid")]
+    public IActionResult Grid([FromQuery] GridParameters parameters) => _userService.GridAsync(parameters).ApiResult();
+
+
+    [HttpPut("{id}/passive")]
+    public IActionResult Passive(long id) => _userService.PassiveAsync(id).ApiResult();
+
+
+    [HttpGet]
+    public IActionResult List() => _userService.ListAsync().ApiResult();
+
+
+    [HttpPut("{id}")]
+    public IActionResult Update(UserModel model) => _userService.UpdateAsync(model).ApiResult();
+}

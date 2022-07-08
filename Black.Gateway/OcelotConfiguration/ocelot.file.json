@@ -1,0 +1,17 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/file-gate/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "ServiceName": "file",
+      "SwaggerKey": "file",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "black.fileapi",
+          "Port": "5002"
+        }
+      ]
+    }
+  ]
+}

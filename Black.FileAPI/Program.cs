@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Black.Infrastructure.UnitOfWorkBase.Concrete;
 using Black.Infrastructure.UnitOfWorkBase.Abstract;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using App.Metrics;
 
 
 #region BUILDER

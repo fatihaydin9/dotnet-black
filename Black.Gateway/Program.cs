@@ -18,6 +18,8 @@ using Black.Database.Repositories.Abstract;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Black.Infrastructure.UnitOfWorkBase.Abstract;
+using Prometheus;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 
 #region GW_BUILDER
@@ -50,11 +52,10 @@ services.AddHealthChecks();
 services.AddDbContext<RelationalDbContext>();
 services.AddTransient<IUnitOfWork, UnitOfWork>();
 services.AddTransient<LoggingDelegatingHandler>();
+services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddOcelot(configuration).AddAppConfiguration();
 services.AddSwaggerForOcelot(configuration);
-services.AddControllers();
-
 
 services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 services.AddAuthenticationJwtBearer(new JwtSettings(Guid.NewGuid().ToString(), TimeSpan.FromHours(12)));
@@ -87,7 +88,19 @@ services.AddHttpClient<IUserService, UserService>(c =>
 #endregion
 
 
-#region GW_HEALTH_CHECKS
+#region GW_METRICS
+services.Configure<KestrelServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
+
+services.Configure<IISServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
+
+services.AddMetrics();
+services.AddMetricsTrackingMiddleware();
 #endregion
 
 
@@ -115,6 +128,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseOcelot().Wait();
 app.MapControllers();
+app.UseHttpMetrics();
+app.MapMetrics();
 app.Run();
 #endregion
 

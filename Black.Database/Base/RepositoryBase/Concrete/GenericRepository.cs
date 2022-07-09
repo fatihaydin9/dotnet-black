@@ -69,8 +69,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     }
     #endregion QueryBase
 
-
-
     #region CommandBase [Entity Framework]
     public async Task<TEntity> AddAsync(TEntity entity)
     {
@@ -151,8 +149,6 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return await query.SingleOrDefaultAsync();
     }
     #endregion CommandBase
-
-
 
     #region NoSQLBase [MongoDb]
     public async Task<IList<TEntity>> GetAllAsyncNoSql()
@@ -245,7 +241,5 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         }
     }
     #endregion
-
-
 
 }

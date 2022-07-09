@@ -1,6 +1,12 @@
 version: '3.4'
 
 services:
+  prometheus:
+    image: prom/prometheus
+
+  grafana:
+    image: grafana/grafana
+
   pgadmin:
     image: dpage/pgadmin4  
 
@@ -34,3 +40,4 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
+  prometheus-data:
